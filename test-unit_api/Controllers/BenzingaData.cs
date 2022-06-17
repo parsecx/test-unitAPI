@@ -27,9 +27,18 @@ namespace test_unit_api.Controllers
                     max_div = Convert.ToDouble(s);
             }
             int counter = 0;
-            foreach(Ipos item in i.ipos)
+            foreach (Ipos item in i.ipos)
                 if (item.ticker == ticker)
                     counter++;
+            IPO ipo_ticker = new();
+            ipo_ticker.ipos = new Ipos[counter];
+            counter = 0;
+            foreach (Ipos item in i.ipos)
+                if (item.ticker == ticker)
+                {
+                    ipo_ticker.ipos[counter]=item;
+                    counter++;
+                }
             JsonModel model = new()
             {
                 DateFrom = date_from,
@@ -37,13 +46,15 @@ namespace test_unit_api.Controllers
                 CountOfMA = m.ma.Length,
                 CountOfEarnings = n.earnings.Length,
                 CountOfIpos = counter,
+                ipo = ipo_ticker,
                 Max_Dividents = max_div.ToString()
             };
-            
+
             model.Ticker = ticker;
-            var res =  new JsonResult(model);
+            var res = new JsonResult(model);
             return res;
             //DateFrom DateTo M&A IPOs Earnings Dividents TickerName_for_IPO's
+
         }
     }
 }
