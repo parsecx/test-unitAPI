@@ -19,11 +19,11 @@ namespace mycaller.models
 
     public class DivModel
     {
-        public Dividents? myDividents { get; set; }
+        public Dividents? MyDividents { get; set; }
         public double maxDiv { get; set; }
         public void MaxDiv()
         {
-            foreach (Dividend? item in myDividents.dividends)
+            foreach (Dividend? item in MyDividents.dividends)
             {
                 char[]? dividents = item.dividend.ToArray();
                 dividents[1] = ',';

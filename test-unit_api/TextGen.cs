@@ -53,10 +53,10 @@ namespace test_unit_api
         private static async Task<string> WithTicker(string dateFrom , string dateTo, string ticker)
         {
             DivModel divModel = new(); 
-            divModel.myDividents = await PreProc.GetConnection_Div(dateFrom, dateTo);
+            divModel.MyDividents = await PreProc.GetConnection_Div(dateFrom, dateTo);
             divModel.MaxDiv();
             Earnings? earningsModel = await PreProc.GetConncetion_Earnings(dateFrom, dateTo);
-            IPO ipoModel = await PreProc.GetConnection_IPO(dateFrom, dateTo);
+            IPO? ipoModel = await PreProc.GetConnection_IPO(dateFrom, dateTo);
             MA? maModel = await PreProc.GetConnection_MA(dateFrom, dateTo);
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string myPath = Path.GetDirectoryName(location);
@@ -89,13 +89,13 @@ namespace test_unit_api
         //Method for getting data with ticker in query 
         private static async Task<string> NoTicker(string dateFrom, string dateTo)
         {
-            DivModel div = new();
-            div.myDividents = await PreProc.GetConnection_Div(dateFrom, dateTo);
-            Earnings ear = await PreProc.GetConncetion_Earnings(dateFrom, dateTo);
-            IPO ipo = await PreProc.GetConnection_IPO(dateFrom, dateTo);
-            MA ma = await PreProc.GetConnection_MA(dateFrom, dateTo);
+            DivModel? div = new();
+            div.MyDividents = await PreProc.GetConnection_Div(dateFrom, dateTo);
+            Earnings? ear = await PreProc.GetConncetion_Earnings(dateFrom, dateTo);
+            IPO? ipo = await PreProc.GetConnection_IPO(dateFrom, dateTo);
+            MA? ma = await PreProc.GetConnection_MA(dateFrom, dateTo);
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string myPath = Path.GetDirectoryName(location);
+            string? myPath = Path.GetDirectoryName(location);
             if (!File.Exists($@"{ myPath}\\{ dateFrom}-{ dateTo}.txt"))
                 try
                 {

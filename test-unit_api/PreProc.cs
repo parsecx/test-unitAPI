@@ -17,7 +17,7 @@ namespace mycaller.preproc
     {
         public static HttpClient? Client { get; set; }
 
-        public static async Task<IPO> GetConnection_IPO(string dateFrom, string dateTo)
+        public static async Task<IPO?> GetConnection_IPO(string dateFrom, string dateTo)
         {
             dateFrom = Date_Cherker(dateFrom);
             dateTo = Date_Cherker(dateTo);
@@ -48,7 +48,7 @@ namespace mycaller.preproc
             }
         }
 
-        public static async Task<MA> GetConnection_MA(string dateFrom, string dateTo)
+        public static async Task<MA?> GetConnection_MA(string dateFrom, string dateTo)
         {
             dateFrom = Date_Cherker(dateFrom);
             dateTo = Date_Cherker(dateTo);
@@ -78,7 +78,7 @@ namespace mycaller.preproc
 
         }
 
-        public static async Task<Earnings> GetConncetion_Earnings(string dateFrom, string dateTo)
+        public static async Task<Earnings?> GetConncetion_Earnings(string dateFrom, string dateTo)
         {
             dateFrom = Date_Cherker(dateFrom);
             dateTo = Date_Cherker(dateTo);
@@ -108,7 +108,7 @@ namespace mycaller.preproc
             }
         }
 
-        public static async Task<Dividents> GetConnection_Div(string dateFrom, string dateTo)
+        public static async Task<Dividents?> GetConnection_Div(string dateFrom, string dateTo)
         {
             dateFrom = Date_Cherker(dateFrom);
             dateTo = Date_Cherker(dateTo);
