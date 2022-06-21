@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using mycaller.models;
 using mycaller.preproc;
 using test_unit_api.models;
@@ -11,50 +10,66 @@ namespace test_unit_api.Controllers
     public class BenzingaData : ControllerBase
     {
         [HttpGet]
-        public async Task<JsonResult> Get(string date_from, string date_to, string ticker)
+        public async Task<JsonResult> Get(string dateFrom, string dateTo, string? ticker)
         {
-            IPO i = await PreProc.GetConnection_IPO(date_from, date_to);
-            Earnings n = await PreProc.GetConncetion_Earnings(date_from, date_to);
-            MA m = await PreProc.GetConnection_MA(date_from, date_to);
-            Dividents d = await PreProc.GetConnection_Div(date_from, date_to);
-            double max_div = 0;
-            foreach (Dividend? item in d.dividends)
+            if (ticker != null)
             {
-                char[]? dividents = item.dividend.ToArray();
-                dividents[1] = ',';
-                string s = new string(dividents);
-                if (max_div < Convert.ToDouble(s))
-                    max_div = Convert.ToDouble(s);
+                JsonModel model = await WithTicker(dateFrom, dateTo, ticker);
+                var res = new JsonResult(model);
+                return res;
             }
-            int counter = 0;
-            foreach (Ipos item in i.ipos)
-                if (item.ticker == ticker)
-                    counter++;
-            IPO ipo_ticker = new();
-            ipo_ticker.ipos = new Ipos[counter];
-            counter = 0;
-            foreach (Ipos item in i.ipos)
-                if (item.ticker == ticker)
-                {
-                    ipo_ticker.ipos[counter]=item;
-                    counter++;
-                }
+            else
+            {
+                JsonModel model = await NoTicker(dateFrom, dateTo);
+                var res = new JsonResult(model);
+                return res;
+            }
+        }
+
+        // Method for getting jsonmodel result without ticker.
+        private async Task<JsonModel> NoTicker(string dateFrom, string dateTo)
+        {
+            IPO ipoModel = await PreProc.GetConnection_IPO(dateFrom, dateTo);
+            Earnings earningsModel = await PreProc.GetConncetion_Earnings(dateFrom, dateTo);
+            MA maModel = await PreProc.GetConnection_MA(dateFrom, dateTo);
+            DivModel divModel = new();
+            divModel.myDividents = await PreProc.GetConnection_Div(dateFrom, dateTo);
+            divModel.MaxDiv();
             JsonModel model = new()
             {
-                DateFrom = date_from,
-                DateTo = date_to,
-                CountOfMA = m.ma.Length,
-                CountOfEarnings = n.earnings.Length,
-                CountOfIpos = counter,
-                ipo = ipo_ticker,
-                Max_Dividents = max_div.ToString()
+                dateFrom = dateFrom,
+                dateTo = dateTo,
+                countOfMA = maModel.ma.Length,
+                countOfEarnings = earningsModel.earnings.Length,
+                countOfIpos = ipoModel.ipos.Length,
+                ipo = ipoModel,
+                maxDividents = divModel.maxDiv.ToString()
             };
+            return model;
+        }
 
-            model.Ticker = ticker;
-            var res = new JsonResult(model);
-            return res;
-            //DateFrom DateTo M&A IPOs Earnings Dividents TickerName_for_IPO's
-
+        // Method for getting jsonmodel result with ticker.
+        private async Task<JsonModel> WithTicker(string dateFrom, string dateTo, string ticker)
+        {
+            IPO ipoModel = await PreProc.GetConnection_IPO(dateFrom, dateTo);
+            Earnings earningsModel = await PreProc.GetConncetion_Earnings(dateFrom, dateTo);
+            MA maModel = await PreProc.GetConnection_MA(dateFrom, dateTo);
+            DivModel divModel = new();
+            divModel.myDividents = await PreProc.GetConnection_Div(dateFrom, dateTo);
+            divModel.MaxDiv();
+            IPO ipoTicker = new();
+            TextGen.TickerCollector(ipoTicker, ipoModel, ticker);
+            JsonModel model = new()
+            {
+                dateFrom = dateFrom,
+                dateTo = dateTo,
+                countOfMA = maModel.ma.Length,
+                countOfEarnings = earningsModel.earnings.Length,
+                countOfIpos = ipoTicker.ipos.Length,
+                ipo = ipoTicker,
+                maxDividents = divModel.maxDiv.ToString()
+            };
+            return model;
         }
     }
 }

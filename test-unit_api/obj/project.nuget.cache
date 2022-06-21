@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nRXVTlX4ZwwOSddL5A2Ydd9FZanbyajyyX6v8Vu8E0q3IjaQqUDDcfZ6M4AFcRBK6y02yMK29UhTSGqeZu9o4g==",
+  "dgSpecHash": "Oi9Tr1caPiC4gmRymNs/rXlVEFo/ogbvstS96l3zpa9VuGug/dz3vflcZyWwhjOoejn5Wla1W7MeyecB5HPBTA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Иван\\source\\repos\\test-unit_api\\test-unit_api.csproj",
+  "projectFilePath": "E:\\test_api\\test-unit_api\\test-unit_api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Иван\\.nuget\\packages\\grpc.core\\2.46.3\\grpc.core.2.46.3.nupkg.sha512",
     "C:\\Users\\Иван\\.nuget\\packages\\grpc.core.api\\2.46.3\\grpc.core.api.2.46.3.nupkg.sha512",

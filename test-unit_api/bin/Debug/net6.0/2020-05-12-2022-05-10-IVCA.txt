@@ -1,0 +1,26 @@
+DateFrom DateTo M&A IPOs Earnings Dividents TickerName_for_IPO's
+2020-05-12  2022-05-10  50  1  50  1,49  IVCA
+id:60c7f608619f580001b5d82a
+date:2022-05-10
+time20:36:24
+ticker:IVCA
+exchange:NASDAQ
+open date veryfied:true
+pricing date:2022-05-09
+currency:USD
+price min10.000
+price max10.000
+price public offering10.000
+price open10.050
+deal status:Closed
+ipo type:SPAC
+insider_lockup_days:180
+insider_lockup_date:2022-11-06
+offering_value:225000000
+offering_shares:22500000
+shares_outstanding:6469000
+underwriter_quiet_expiration_days:40
+underwriter_quiet_expiration_date:40
+notes:
+updated1653083434
+------------------------------------------------------------------------

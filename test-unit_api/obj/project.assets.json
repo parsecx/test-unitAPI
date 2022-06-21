@@ -498,11 +498,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Иван\\source\\repos\\test-unit_api\\test-unit_api.csproj",
+      "projectUniqueName": "E:\\test_api\\test-unit_api\\test-unit_api.csproj",
       "projectName": "test-unit_api",
-      "projectPath": "C:\\Users\\Иван\\source\\repos\\test-unit_api\\test-unit_api.csproj",
+      "projectPath": "E:\\test_api\\test-unit_api\\test-unit_api.csproj",
       "packagesPath": "C:\\Users\\Иван\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Иван\\source\\repos\\test-unit_api\\obj\\",
+      "outputPath": "E:\\test_api\\test-unit_api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Иван\\AppData\\Roaming\\NuGet\\NuGet.Config",

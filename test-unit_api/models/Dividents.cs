@@ -11,10 +11,27 @@ namespace mycaller.models
     {
         public Dividend[]? dividends { get; set; }
     }
-
+ 
     public class Dividend
     {
         public string? dividend { get; set; }
+    }
+
+    public class DivModel
+    {
+        public Dividents? myDividents { get; set; }
+        public double maxDiv { get; set; }
+        public void MaxDiv()
+        {
+            foreach (Dividend? item in myDividents.dividends)
+            {
+                char[]? dividents = item.dividend.ToArray();
+                dividents[1] = ',';
+                string s = new string(dividents);
+                if (maxDiv < Convert.ToDouble(s))
+                    maxDiv = Convert.ToDouble(s);
+            }
+        }
     }
 
 }
