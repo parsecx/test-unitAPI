@@ -10,7 +10,17 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Прочие файлы",
       "ColorIndex": -1
+    },
+    "6cc4d3e6-4a5a-4234-a4ee-cb43976ab81a": {
+      "ProjectGuid": "6cc4d3e6-4a5a-4234-a4ee-cb43976ab81a",
+      "DisplayName": "api.tests",
+      "ColorIndex": 1
+    },
+    "6d4d63fa-6e0d-4675-9d78-d7ea5b9f8334": {
+      "ProjectGuid": "6d4d63fa-6e0d-4675-9d78-d7ea5b9f8334",
+      "DisplayName": "api.tests",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 3
 }

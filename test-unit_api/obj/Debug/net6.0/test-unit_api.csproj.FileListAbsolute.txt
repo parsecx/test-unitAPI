@@ -81,4 +81,3 @@ E:\test_api\test-unit_api\obj\Debug\net6.0\staticwebassets.development.json
 E:\test_api\test-unit_api\obj\Debug\net6.0\scopedcss\bundle\test-unit_api.styles.css
 E:\test_api\test-unit_api\obj\Debug\net6.0\test-unit_api.csproj.CopyComplete
 E:\test_api\test-unit_api\obj\Debug\net6.0\test-unit_api.genruntimeconfig.cache
-E:\test_api\test-unit_api\obj\Debug\net6.0\test-unit_api.csproj.AssemblyReference.cache

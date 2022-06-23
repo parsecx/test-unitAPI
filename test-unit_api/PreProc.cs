@@ -13,7 +13,7 @@ namespace mycaller.preproc
 {
     //Class with static method for each endpoint 
     
-    static class PreProc
+    public static class PreProc
     {
         public static HttpClient? Client { get; set; }
 

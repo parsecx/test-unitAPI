@@ -60,7 +60,7 @@ namespace test_unit_api
             MA? maModel = await PreProc.GetConnection_MA(dateFrom, dateTo);
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string myPath = Path.GetDirectoryName(location);
-            IPO ipoTicker = new();
+            IPO? ipoTicker = new();
             TickerCollector(ipoTicker, ipoModel, ticker);
             if (!File.Exists($@"{myPath}\\{dateFrom}-{dateTo}-{ticker}.txt"))
                 try
@@ -126,7 +126,7 @@ namespace test_unit_api
             int counter = 0;
             foreach(Ipos item in ipoData.ipos)
                 if (item.ticker == ticker)
-                counter++;
+                    counter++;
             ipoResult.ipos = new Ipos[counter];
             counter = 0;
             foreach (Ipos item in ipoData.ipos)
