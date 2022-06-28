@@ -69,7 +69,7 @@ namespace api.tests
         public async Task BenzingaDataTestWithTicker()
         {
             // Arrange
-            JsonModel actualModel = new JsonModel();
+            JsonModel? actualModel = new JsonModel();
             TestsForPreProc unit = new();
             unit.SetupForIPO();
             _jsonExpected.Ipo.ipos.Add(unit.ipoUnit);

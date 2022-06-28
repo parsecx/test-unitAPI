@@ -9,7 +9,7 @@ namespace mycaller.models
 {
     public class Dividends  
     {
-        public Dividend?[] dividends { get; set; }
+        public List<Dividend?> dividends { get; set; }
     }
 
     public class Dividend

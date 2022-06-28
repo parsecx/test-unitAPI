@@ -219,8 +219,9 @@ namespace test_unit_api
                 foreach (Ipos ipo in item.IPO)
                     PrinterIPO(ipo, stream);
                 stream.WriteLine("Dividends");
-                //foreach (Dividend div in item.Dividents)
-                    //PrinterDiv(div, stream);
+                if (item.Dividents != null) 
+                    foreach (Dividend div in item.Dividents)
+                        PrinterDiv(div, stream);
                 stream.WriteLine("MA");
                 foreach (Ma ma in item.MA)
                     PrinterMa(ma, stream);

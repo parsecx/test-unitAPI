@@ -144,14 +144,14 @@ namespace mycaller.preproc
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            string url = $"https://api.benzinga.com/api/v2.1/calendar/dividends?parameters[date_from]={dateFrom}&parameters[date_to]={dateTo}&parameters[tickers]={tickers}&token=a255db84b80243f79a120c8122daaedb";
+            string url = $"https://api.benzinga.com/api/v2.1/calendar/dividends?parameters%5Bdate_from%5D={dateFrom}&parameters%5Bdate_to%5D={dateTo}&parameters%5Btickers%={tickers}&token=a255db84b80243f79a120c8122daaedb";
             using (HttpResponseMessage response = await Client.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     Dividends? model;
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    if (JsonConvert.DeserializeObject<Dividends>(responseBody) != null)
+                    if (responseBody != "[]")
                     {
                         model = JsonConvert.DeserializeObject<Dividends>(responseBody);
                     }
@@ -172,7 +172,7 @@ namespace mycaller.preproc
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            string url = $"https://api.benzinga.com/api/v2.1/calendar/ma?parameters%5Bdate_from%5D={dateFrom}&parameters%5Bdate_to%5D={dateTo}&token=a255db84b80243f79a120c8122daaedb";
+            string url = $"https://api.benzinga.com/api/v2.1/calendar/ma?parameters%5Bdate_from%5D={dateFrom}&parameters%5Bdate_to%5D={dateTo}&parameters%5Btickers%5D={tickers}&token=a255db84b80243f79a120c8122daaedb";
             using (HttpResponseMessage response = await Client.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
@@ -201,14 +201,14 @@ namespace mycaller.preproc
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            string url = $"https://api.benzinga.com/api/v2.1/calendar/earnings?parameters%5Bdate_from%5D=2020-06-12&parameters%5Bdate_to%5D=2022-06-15&parameters%5Btickers%5D={tickers}&token=a255db84b80243f79a120c8122daaedb";
+            string url = $"https://api.benzinga.com/api/v2.1/calendar/earnings?parameters%5Bdate_from%5D={dateFrom}&parameters%5Bdate_to%5D={dateTo}&parameters%5Btickers%5D={tickers}&token=a255db84b80243f79a120c8122daaedb";
             using (HttpResponseMessage response = await Client.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     Earnings? model;
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    if (JsonConvert.DeserializeObject<Earnings>(responseBody) != null)
+                    if (responseBody != "[]")
                     {
                         model = JsonConvert.DeserializeObject<Earnings>(responseBody);
                     }
