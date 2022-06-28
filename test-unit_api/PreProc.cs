@@ -12,21 +12,21 @@ using System.Runtime;
 namespace mycaller.preproc
 {
     //Class with static method for each endpoint 
-    
+
     public static class PreProc
     {
         public static HttpClient? Client { get; set; }
 
         public static async Task<IPO?> GetConnection_IPO(string dateFrom, string dateTo)
         {
-            dateFrom = Date_Cherker(dateFrom);
-            dateTo = Date_Cherker(dateTo);
+            dateFrom = DateCherker(dateFrom);
+            dateTo = DateCherker(dateTo);
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             string url = $"https://api.benzinga.com/api/v2.1/calendar/ipos?parameters%5Bdate_from%5D={dateFrom}&parameters%5Bdate_to%5D={dateTo}&token=a255db84b80243f79a120c8122daaedb";
             using (HttpResponseMessage response = await Client.GetAsync(url))
-            { 
+            {
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
@@ -39,7 +39,7 @@ namespace mycaller.preproc
                     {
                         model = new IPO();
                     }
-                    return model; 
+                    return model;
                 }
                 else
                 {
@@ -50,8 +50,8 @@ namespace mycaller.preproc
 
         public static async Task<MA?> GetConnection_MA(string dateFrom, string dateTo)
         {
-            dateFrom = Date_Cherker(dateFrom);
-            dateTo = Date_Cherker(dateTo);
+            dateFrom = DateCherker(dateFrom);
+            dateTo = DateCherker(dateTo);
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -80,16 +80,16 @@ namespace mycaller.preproc
 
         public static async Task<Earnings?> GetConncetion_Earnings(string dateFrom, string dateTo)
         {
-            dateFrom = Date_Cherker(dateFrom);
-            dateTo = Date_Cherker(dateTo);
+            dateFrom = DateCherker(dateFrom);
+            dateTo = DateCherker(dateTo);
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             string url = $"https://api.benzinga.com/api/v2.1/calendar/earnings?parameters%5Bdate_from%5D={dateFrom}&parameters%5Bdate_to%5D={dateTo}&token=a255db84b80243f79a120c8122daaedb";
             using (HttpResponseMessage response = await Client.GetAsync(url))
             {
-                    if (response.IsSuccessStatusCode)
-                    {
+                if (response.IsSuccessStatusCode)
+                {
                     Earnings? model;
                     string responseBody = await response.Content.ReadAsStringAsync();
                     if (JsonConvert.DeserializeObject<Earnings>(responseBody) != null)
@@ -102,16 +102,16 @@ namespace mycaller.preproc
                     }
                     return model;
                 }
-                    else
-                        throw new Exception(response.ReasonPhrase);
-                
+                else
+                    throw new Exception(response.ReasonPhrase);
+
             }
         }
 
-        public static async Task<Dividents?> GetConnection_Div(string dateFrom, string dateTo)
+        public static async Task<Dividends?> GetConnection_Div(string dateFrom, string dateTo)
         {
-            dateFrom = Date_Cherker(dateFrom);
-            dateTo = Date_Cherker(dateTo);
+            dateFrom = DateCherker(dateFrom);
+            dateTo = DateCherker(dateTo);
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -120,33 +120,120 @@ namespace mycaller.preproc
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    Dividents? model;
+                    Dividends? model = new();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    if (JsonConvert.DeserializeObject<Dividents>(responseBody) != null)
+                    if (responseBody != null)
                     {
-                        model = JsonConvert.DeserializeObject<Dividents>(responseBody);
+
+                        model = JsonConvert.DeserializeObject<Dividends>(responseBody);
                     }
                     else
                     {
-                        model = new Dividents();
+                        model = new Dividends();
                     }
                     return model;
                 }
-                else 
+                else
                     throw new Exception(response.ReasonPhrase);
             }
         }
-
-        //Cheks whether date is correct or not
-        private static string Date_Cherker(string date)
+        public static async Task<Dividends?> GetConnection_Div(string dateFrom, string dateTo, string tickers)
         {
-            string[] s = date.Split('-');
-            DateTime outDate = new DateTime(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), Convert.ToInt32(s[2]));
-            if (DateTime.Now > outDate&&!(outDate.Year < DateTime.Now.Year - 5))
-                return date;
-            else 
-                return DateTime.Now.ToString("yyyy-mm-dd");
+            dateFrom = DateCherker(dateFrom);
+            dateTo = DateCherker(dateTo);
+            Client = new HttpClient();
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            string url = $"https://api.benzinga.com/api/v2.1/calendar/dividends?parameters[date_from]={dateFrom}&parameters[date_to]={dateTo}&parameters[tickers]={tickers}&token=a255db84b80243f79a120c8122daaedb";
+            using (HttpResponseMessage response = await Client.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    Dividends? model;
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    if (JsonConvert.DeserializeObject<Dividends>(responseBody) != null)
+                    {
+                        model = JsonConvert.DeserializeObject<Dividends>(responseBody);
+                    }
+                    else
+                    {
+                        model = new Dividends();
+                    }
+                    return model;
+                }
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
         }
+        public static async Task<MA?> GetConnection_MA(string dateFrom, string dateTo, string tickers)
+        {
+            dateFrom = DateCherker(dateFrom);
+            dateTo = DateCherker(dateTo);
+            Client = new HttpClient();
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            string url = $"https://api.benzinga.com/api/v2.1/calendar/ma?parameters%5Bdate_from%5D={dateFrom}&parameters%5Bdate_to%5D={dateTo}&token=a255db84b80243f79a120c8122daaedb";
+            using (HttpResponseMessage response = await Client.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    MA? model;
+                    if (JsonConvert.DeserializeObject<MA>(responseBody) != null)
+                    {
+                        model = JsonConvert.DeserializeObject<MA>(responseBody);
+                    }
+                    else
+                    {
+                        model = new MA();
+                    }
+                    return model;
+                }
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
 
+        }
+        public static async Task<Earnings?> GetConncetion_Earnings(string dateFrom, string dateTo, string tickers)
+        {
+            dateFrom = DateCherker(dateFrom);
+            dateTo = DateCherker(dateTo);
+            Client = new HttpClient();
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            string url = $"https://api.benzinga.com/api/v2.1/calendar/earnings?parameters%5Bdate_from%5D=2020-06-12&parameters%5Bdate_to%5D=2022-06-15&parameters%5Btickers%5D={tickers}&token=a255db84b80243f79a120c8122daaedb";
+            using (HttpResponseMessage response = await Client.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    Earnings? model;
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    if (JsonConvert.DeserializeObject<Earnings>(responseBody) != null)
+                    {
+                        model = JsonConvert.DeserializeObject<Earnings>(responseBody);
+                    }
+                    else
+                    {
+                        model = new Earnings();
+                    }
+                    return model;
+                }
+                else
+                    throw new Exception(response.ReasonPhrase);
+
+            }
+        }
+            //Cheks whether date is correct or not
+            static string DateCherker(string date)
+            {
+                string[] s = date.Split('-');
+                DateTime outDate = new DateTime(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), Convert.ToInt32(s[2]));
+                if (DateTime.Now > outDate && !(outDate.Year < DateTime.Now.Year - 5))
+                    return date;
+                else
+                    return DateTime.Now.ToString("yyyy-mm-dd");
+            }
+
+        
     }
 }

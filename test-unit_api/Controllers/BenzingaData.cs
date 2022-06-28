@@ -26,8 +26,7 @@ namespace test_unit_api.Controllers
             }
         }
 
-        // Method for getting jsonmodel result without ticker.
-        private async Task<JsonModel> NoTicker(string dateFrom, string dateTo)
+        private static async Task<JsonModel> NoTicker(string dateFrom, string dateTo)
         {
             IPO? ipoModel = await PreProc.GetConnection_IPO(dateFrom, dateTo);
             Earnings? earningsModel = await PreProc.GetConncetion_Earnings(dateFrom, dateTo);
@@ -35,21 +34,22 @@ namespace test_unit_api.Controllers
             DivModel? divModel = new();
             divModel.MyDividents = await PreProc.GetConnection_Div(dateFrom, dateTo);
             divModel.MaxDiv();
+            TickerDataAll dataTicker = await ProcTickerData.CollectData(dateFrom, dateTo, ipoModel);
             JsonModel model = new()
             {
                 DateFrom = dateFrom,
                 DateTo = dateTo,
-                CountOfMA = maModel.ma.Length,
-                CountOfEarnings = earningsModel.earnings.Length,
-                CountOfIpos = ipoModel.ipos.Length,
+                CountOfMA = maModel.ma.Count,
+                CountOfEarnings = earningsModel.earnings.Count,
+                CountOfIpos = ipoModel.ipos.Count,
                 Ipo = ipoModel,
-                MaxDividents = divModel.maxDiv.ToString()
+                MaxDividents = divModel.maxDiv.ToString(),
+                DataOfTicker = dataTicker
             };
             return model;
         }
 
-        // Method for getting jsonmodel result with ticker.
-        private async Task<JsonModel> WithTicker(string dateFrom, string dateTo, string ticker)
+        private static async Task<JsonModel> WithTicker(string dateFrom, string dateTo, string ticker)
         {
             IPO? ipoModel = await PreProc.GetConnection_IPO(dateFrom, dateTo);
             Earnings? earningsModel = await PreProc.GetConncetion_Earnings(dateFrom, dateTo);
@@ -59,13 +59,14 @@ namespace test_unit_api.Controllers
             divModel.MaxDiv();
             IPO ipoTicker = new();
             TextGen.TickerCollector(ipoTicker, ipoModel, ticker);
+           
             JsonModel model = new()
             {
                 DateFrom = dateFrom,
                 DateTo = dateTo,
-                CountOfMA = maModel.ma.Length,
-                CountOfEarnings = earningsModel.earnings.Length,
-                CountOfIpos = ipoTicker.ipos.Length,
+                CountOfMA = maModel.ma.Count,
+                CountOfEarnings = earningsModel.earnings.Count,
+                CountOfIpos = ipoTicker.ipos.Count,
                 Ipo = ipoTicker,
                 MaxDividents = divModel.maxDiv.ToString()
             };

@@ -11,7 +11,7 @@ namespace mycaller.models
 
     public class IPO
     {
-        public Ipos[]? ipos { get; set; }
+        public List<Ipos> ipos { get; set; }
     }
 
     public class Ipos

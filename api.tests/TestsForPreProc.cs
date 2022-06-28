@@ -2,6 +2,7 @@ using mycaller.models;
 using mycaller.preproc;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using test_unit_api;
 
@@ -10,16 +11,14 @@ namespace api.tests
     [TestFixture]
     public class TestsForPreProc
     {
-        public Ipos ipoUnit 
+        public Ipos ipoUnit
         {
             get
             {
                 return _iposModelTest;
             }
-                
-        } 
+        }
         static Ipos? _iposModelTest;
-        static Earnings? _earningsModelTest;
         static string _dateFrom = "2020-05-10";
         static string _dateTo = "2022-05-10";
 
@@ -63,7 +62,7 @@ namespace api.tests
         {
             // Arrange
             IPO? ipoModelResult = new();
-            ipoModelResult.ipos = new Ipos[1];
+            ipoModelResult.ipos = new List<Ipos>();
             string ticker = "IVCA";
 
             // Act
@@ -87,7 +86,7 @@ namespace api.tests
             MA maModelActual = await PreProc.GetConnection_MA(_dateFrom, _dateTo);
 
             // Assert
-            Assert.GreaterOrEqual(maModelActual.ma.Length, expected);
+            Assert.GreaterOrEqual(maModelActual.ma.Count, expected);
         }
 
         [Test]
@@ -116,7 +115,7 @@ namespace api.tests
             earningsModel = await PreProc.GetConncetion_Earnings(_dateFrom, _dateTo);
 
             // Assert
-            Assert.GreaterOrEqual(earningsModel.earnings.Length, expected);
+            Assert.GreaterOrEqual(earningsModel.earnings.Count, expected);
         }
 
     }

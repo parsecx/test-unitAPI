@@ -2,6 +2,7 @@
 using mycaller.models;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using test_unit_api;
@@ -33,7 +34,7 @@ namespace api.tests
                 Ticker = null,
                 Ipo = new IPO()
             };
-            _jsonExpected.Ipo.ipos = new Ipos[1];
+            _jsonExpected.Ipo.ipos = new List<Ipos>();
         }
 
         [SetUp]
@@ -49,13 +50,15 @@ namespace api.tests
             // Arrange
             JsonModel actualModel = new JsonModel();
             _jsonExpected.CountOfIpos = 50;
+            _jsonExpected.DataOfTicker = null ;
 
             // Act
             JsonResult? resultApiGet = await _controllerData.Get(_dateFrom, _dateTo, null);
             string expected = JsonConvert.SerializeObject(_jsonExpected, Formatting.Indented);
             string strModel = JsonConvert.SerializeObject(resultApiGet.Value);
             actualModel = JsonConvert.DeserializeObject<JsonModel>(strModel);
-            actualModel.Ipo.ipos = new Ipos[1];
+            actualModel.Ipo.ipos = new List<Ipos>();
+            actualModel.DataOfTicker = null;
             string actual = JsonConvert.SerializeObject(actualModel, Formatting.Indented);
 
             //Assert
@@ -69,7 +72,7 @@ namespace api.tests
             JsonModel actualModel = new JsonModel();
             TestsForPreProc unit = new();
             unit.SetupForIPO();
-            _jsonExpected.Ipo.ipos[0] = unit.ipoUnit;
+            _jsonExpected.Ipo.ipos.Add(unit.ipoUnit);
             _jsonExpected.CountOfIpos = 1;
 
             // Act

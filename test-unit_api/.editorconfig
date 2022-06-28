@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0006: Не удалось найти файл метаданных "E:\test_api\test-unit_api\bin\Debug\net6.0\ref\test-unit_api.dll".
+dotnet_diagnostic.CS0006.severity = none
